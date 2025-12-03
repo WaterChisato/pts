@@ -3,41 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg">
-    <title>梦想之城盾-5秒盾验证中</title>
+    <!-- 浏览器标签栏小图标 -->
+    <link rel="icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg" type="image/jpeg">
+    <link rel="shortcut icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg" type="image/jpeg">
+    <title>蔻之盾 - 验证中</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-               body{
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','Segoe UI',sans-serif}
+        body{
             min-height:100vh;
             background:url(http://logo.kf.waterchisato.top/tybj.jpg) center/cover no-repeat fixed;
             display:flex;align-items:center;justify-content:center;padding:20px;
         }
         .shield-container{
-            width:100%;max-width:550px;background:rgba(255,255,255,0.92);
-            border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15);
-            padding:40px 30px;text-align:center;backdrop-filter:blur(8px);
+            width:100%;max-width:550px;background:rgba(255,255,255,0.94);
+            border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,0.2);
+            padding:45px 35px;text-align:center;backdrop-filter:blur(10px);
         }
-        .shield-icon{font-size:60px;color:#4299e1;margin-bottom:25px}
-        h1{color:#2d3748;font-size:28px;margin-bottom:12px}
-        .second-tip{color:#718096;font-size:15px;margin:10px 0 20px;height:20px}
-        .verify-tip{color:#4a5568;font-size:16px;line-height:1.6;margin-bottom:10px}
-        .countdown-box{background:#e8f4f8;border-radius:10px;padding:15px 0;margin-bottom:30px}
-        .countdown-text{color:#2d3748;font-size:17px;margin-bottom:8px}
-        .countdown-num{color:#4299e1;font-size:40px;font-weight:700}
-        .shield-btn{display:none}
+        .shield-icon{
+            font-size:82px;margin-bottom:18px;
+        }
+        h1{color:#2d3748;font-size:29px;margin-bottom:12px}
+        .second-tip{color:#718096;font-size:15px;margin:12px 0 22px;height:22px;min-height:22px}
+        .verify-tip{color:#4a5568;font-size:16px;line-height:1.6;margin-bottom:12px}
+        .countdown-box{background:#e3f2fd;border-radius:12px;padding:18px 0;margin:25px 0}
+        .countdown-text{color:#1565c0;font-size:17px;margin-bottom:8px}
+        .countdown-num{color:#1976d2;font-size:48px;font-weight:800;letter-spacing:2px}
     </style>
 </head>
 <body>
     <div class="shield-container">
-        <div class="shield-icon">梦想之蔻盾</div>
-        <h1>10秒盾验证中</h1>
-        <p class="verify-tip">梦想之蔻盾正在验证你的请求合法性，请耐心等待，验证成功后将会自动跳转</p>
+        <div class="shield-icon">蔻之盾</div>
+        <h1>蔻之盾</h1>
+        <p class="verify-tip">蔻之盾正在验证您的访问请求，请稍候，验证成功后自动跳转</p>
         <p class="second-tip" id="secondTip"></p>
         <div class="countdown-box">
             <p class="countdown-text">验证倒计时</p>
             <div class="countdown-num" id="count">10</div>
         </div>
-        <button class="shield-btn" id="shieldBtn"></button>
     </div>
 
     <script>
@@ -45,9 +47,9 @@
         const countElement = document.getElementById('count');
         const secondTip = document.getElementById('secondTip');
         const tipTexts = [
-            "正在验证你的请求合法性...",
-            "正在验证你的用户行为...",
-            "正在检测你是人机的可能性...",
+            "正在验证您的请求合法性...",
+            "正在分析用户行为特征...",
+            "正在检测人机识别概率...",
             "验证进度同步中...",
             "即将完成验证..."
         ];
@@ -59,12 +61,10 @@
             if (count <= 0) {
                 clearInterval(timer);
                 countElement.textContent = "验证成功，正在跳转……";
-                secondTip.textContent = "验证成功";
-
-                
+                secondTip.textContent = "验证通过";
                 setTimeout(() => {
-                    location.href = atob(atob("YUhSMGNITTZMeTlqWld4dmQybHVaejVoYld4d0xtTnZiUzl5Wnk4eU5Ua3VPREUyTWpFek9UUT0="));
-                }, 1200);
+                    location.href = atob("aHR0cDovL3dhdGVyY2hpc2F0by50b3A=");
+                }, 1300);
             }
         }, 1000);
     </script>
