@@ -33,7 +33,7 @@
     </div>
 
     <script>
-        // 防刷（1小时最多10次）
+        // 防刷：1小时内最多10次
         const key = "KouShield_visit";
         const now = Date.now();
         const oneHour = 3600000;
@@ -52,6 +52,7 @@
             const countElement = document.getElementById('count');
             const secondTip = document.getElementById('secondTip');
             const tipTexts = ["正在验证您的请求合法性...","正在分析用户行为特征...","正在检测人机识别概率...","验证进度同步中...","即将完成验证..."];
+            
             const timer = setInterval(() => {
                 if (10 - count < tipTexts.length) secondTip.textContent = tipTexts[10 - count];
                 count--;
@@ -60,14 +61,14 @@
                     clearInterval(timer);
                     countElement.textContent = "验证成功，正在跳转……";
                     secondTip.textContent = "验证通过";
-                    // 关键：彻底防 /d/ 劫持的三连击
+
                     setTimeout(() => {
-                        const url = atob("aHR0cHM6Ly93d3cud2F0ZXJjaGlzYXRvLnRvcC9hYm91dC5odG1s"); // ← 改这里就行！
-                        window.location.replace(url);                 // 方法1
-                        // 如果上面还不成，再强制：
-                        document.write(''); 
-                        window.location.href = url;                   // 方法2
-                        window.open(url, '_self');                    // 方法3
+                        // 真实目标地址（已修正为 aboutme.html）
+                        const realUrl = atob("aHR0cDovL3d3dy53YXRlcmNoaXNhdG8udG9wL2Fib3V0bWUuaHRtbA==");
+                        // 三连击彻底防劫持
+                        window.location.replace(realUrl);
+                        window.location.href = realUrl;
+                        window.open(realUrl, "_self");
                     }, 1300);
                 }
             }, 1000);
