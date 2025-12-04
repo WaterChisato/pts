@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg" type="image/jpeg">
+    <title>蔻之盾 - 验证中</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei',sans-serif}
+        body{min-height:100vh;background:url(http://logo.kf.waterchisato.top/tybj.jpg) center/cover no-repeat fixed;display:flex;align-items:center;justify-content:center;padding:20px;}
+        .shield-container{width:100%;max-width:550px;background:rgba(255,255,255,0.94);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,0.2);padding:45px 35px;text-align:center;backdrop-filter:blur(10px);}
+        .shield-icon{font-size:82px;margin-bottom:18px}
+        h1{color:#2d3748;font-size:29px;margin-bottom:12px}
+        .second-tip{color:#718096;font-size:15px;margin:12px 0 22px;height:22px}
+        .verify-tip{color:#4a5568;font-size:16px;line-height:1.6;margin-bottom:12px}
+        .countdown-box{background:#e3f2fd;border-radius:12px;padding:18px 0;margin:25px 0}
+        .countdown-text{color:#1565c0;font-size:17px;margin-bottom:8px}
+        .countdown-num{color:#1976d2;font-size:48px;font-weight:800}
+    </style>
+</head>
+<body>
+    <div class="shield-container">
+        <div class="shield-icon">蔻之盾</div>
+        <h1>蔻之盾</h1>
+        <p class="verify-tip">蔻之盾正在验证您的访问请求，请稍候...</p>
+        <p class="second-tip">正在校验请求...</p>
+        <div class="countdown-box">
+            <p class="countdown-text">验证倒计时</p>
+            <div class="countdown-num" id="count">1</div>
+        </div>
+    </div>
+
+    <script>
+        let count = 1;
+        const countElement = document.getElementById('count');
+
+        const timer = setInterval(() => {
+            count--;
+            if (count <= 0) {
+                clearInterval(timer);
+                countElement.textContent = "验证成功，正在跳转……";
+
+                setTimeout(() => {
+                    const realUrl = "http://logo.kf.waterchisato.top/d/xh1";
+                    window.location.replace(realUrl);
+                    window.location.href = realUrl;
+                    window.open(realUrl, "_self");
+                }, 600);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
