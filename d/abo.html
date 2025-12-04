@@ -4,28 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg" type="image/jpeg">
-    <link rel="shortcut icon" href="http://logo.kf.waterchisato.top/pic/web_logo.jpeg" type="image/jpeg">
     <title>蔻之盾 - 验证中</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','Segoe UI',sans-serif}
-        body{
-            min-height:100vh;
-            background:url(http://logo.kf.waterchisato.top/tybj.jpg) center/cover no-repeat fixed;
-            display:flex;align-items:center;justify-content:center;padding:20px;
-        }
-        .shield-container{
-            width:100%;max-width:550px;background:rgba(255,255,255,0.94);
-            border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,0.2);
-            padding:45px 35px;text-align:center;backdrop-filter:blur(10px);
-        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei',sans-serif}
+        body{min-height:100vh;background:url(http://logo.kf.waterchisato.top/tybj.jpg) center/cover no-repeat fixed;display:flex;align-items:center;justify-content:center;padding:20px;}
+        .shield-container{width:100%;max-width:550px;background:rgba(255,255,255,0.94);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,0.2);padding:45px 35px;text-align:center;backdrop-filter:blur(10px);}
         .shield-icon{font-size:82px;margin-bottom:18px}
         h1{color:#2d3748;font-size:29px;margin-bottom:12px}
         .second-tip{color:#718096;font-size:15px;margin:12px 0 22px;height:22px;min-height:22px}
         .verify-tip{color:#4a5568;font-size:16px;line-height:1.6;margin-bottom:12px}
         .countdown-box{background:#e3f2fd;border-radius:12px;padding:18px 0;margin:25px 0}
         .countdown-text{color:#1565c0;font-size:17px;margin-bottom:8px}
-        .countdown-num{color:#1976d2;font-size:48px;font-weight:800;letter-spacing:2px}
-        .fail{color:#e53e3e;font-size:18px;font-weight:bold}
+        .countdown-num{color:#1976d2;font-size:48px;font-weight:800}
+        .fail{color:#e53e3e;font-size:20px;font-weight:bold}
     </style>
 </head>
 <body>
@@ -38,26 +29,19 @@
             <p class="countdown-text">验证倒计时</p>
             <div class="countdown-num" id="count">10</div>
         </div>
-        <div id="failMsg" style="display:none;color:#c53030;font-size:20px;font-weight:bold;">
-            验证失败<br>访问过于频繁，请1小时后再试
-        </div>
+        <div id="failMsg" style="display:none;">验证失败<br>访问过于频繁，请1小时后再试</div>
     </div>
 
     <script>
-        
+        // 防刷（1小时最多10次）
         const key = "KouShield_visit";
         const now = Date.now();
-        const oneHour = 60 * 60 * 1000;
+        const oneHour = 3600000;
         let visits = JSON.parse(localStorage.getItem(key) || "[]");
-
-        
         visits = visits.filter(t => now - t < oneHour);
-
-        
         visits.push(now);
         localStorage.setItem(key, JSON.stringify(visits));
 
-        
         if (visits.length > 10) {
             document.getElementById("tipText").style.display = "none";
             document.getElementById("countBox").style.display = "none";
@@ -67,24 +51,23 @@
             let count = 10;
             const countElement = document.getElementById('count');
             const secondTip = document.getElementById('secondTip');
-            const tipTexts = [
-                "正在验证您的请求合法性...",
-                "正在分析用户行为特征...",
-                "正在检测人机识别概率...",
-                "验证进度同步中...",
-                "即将完成验证..."
-            ];
+            const tipTexts = ["正在验证您的请求合法性...","正在分析用户行为特征...","正在检测人机识别概率...","验证进度同步中...","即将完成验证..."];
             const timer = setInterval(() => {
-                const tipIndex = 10 - count;
-                if (tipIndex < tipTexts.length) secondTip.textContent = tipTexts[tipIndex];
+                if (10 - count < tipTexts.length) secondTip.textContent = tipTexts[10 - count];
                 count--;
                 countElement.textContent = count;
                 if (count <= 0) {
                     clearInterval(timer);
                     countElement.textContent = "验证成功，正在跳转……";
                     secondTip.textContent = "验证通过";
+                    // 关键：彻底防 /d/ 劫持的三连击
                     setTimeout(() => {
-                        location.href = atob("aHR0cCUzQS8vd3d3LndhdGVyY2hpc2F0by50b3AvYWJvdXQuaHRtbA==");
+                        const url = atob("aHR0cHM6Ly93d3cud2F0ZXJjaGlzYXRvLnRvcC9hYm91dC5odG1s"); // ← 改这里就行！
+                        window.location.replace(url);                 // 方法1
+                        // 如果上面还不成，再强制：
+                        document.write(''); 
+                        window.location.href = url;                   // 方法2
+                        window.open(url, '_self');                    // 方法3
                     }, 1300);
                 }
             }, 1000);
